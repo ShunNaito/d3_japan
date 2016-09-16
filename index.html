@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+/* CSS goes here. */
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v0.min.js"></script>
+<script>
+var width = 960,
+    height = 1160;
+
+var projection = d3.geo.mercator()
+    .center([137, 34])
+    .scale(1000)
+    .translate([width / 2, height / 2]);
+
+var path = d3.geo.path()
+   .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("japan.topojson", function(error, japan) {
+  svg.append("path")
+      .datum(topojson.object(japan, japan.objects.japan))
+      .attr("d", path);
+});
+</script>
